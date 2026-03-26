@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Snapchat Strategist · Resource Hub</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+  <!-- Sticky toolbar -->
+  <div class="sticky-toolbar" aria-label="Quick actions">
+    <button onclick="toggleTheme()" title="Switch theme" aria-label="Switch theme">🌓</button>
+    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" title="Back to top" aria-label="Back to top">↑</button>
+  </div>
+
+  <header>
+    <h1>Snapchat Strategist</h1>
+    <div class="meta">Resource Hub · Meeting guides, frameworks &amp; technical deep‑dives</div>
+  </header>
+
+  <div class="wrap">
+    <div class="notice">
+      <strong>✔ Welcome:</strong> Curated guides for Snapchat marketing professionals. All guides include bilingual scripts (EN/AR), troubleshooting frameworks, and actionable next steps. Select a guide below to begin.
+    </div>
+
+    <section class="section">
+      <div class="kicker">Core Resources</div>
+      <h2>Meeting Guides &amp; Frameworks</h2>
+
+      <div class="card-grid">
+        <!-- Card 1: still opens the shared intake form -->
+        <div class="guide-card" role="button" tabindex="0" data-guide="Pixel Setup &amp; Verification" aria-label="Open form for Pixel Setup & Verification">
+          <div class="badges">
+            <span class="badge technical">Technical</span>
+            <span class="badge meeting">Meeting Flow</span>
+          </div>
+          <h3 class="card-title">Pixel Setup &amp; Verification</h3>
+          <p class="card-desc">Deep-dive guide for fixing missing or misconfigured Snap Pixel. Includes troubleshooting and live scripts.</p>
+          <span class="guide-link">Open Form →</span>
+        </div>
+
+        <!-- Card 2: still opens the same shared intake form -->
+        <div class="guide-card" role="button" tabindex="0" data-guide="Bidding Strategies" aria-label="Open form for Bidding Strategies">
+          <div class="badges">
+            <span class="badge strategy">Strategy</span>
+            <span class="badge meeting">Meeting Flow</span>
+          </div>
+          <h3 class="card-title">Bidding Strategies</h3>
+          <p class="card-desc">Expert-level overview of Snapchat bidding strategies, auction dynamics, and optimization approaches with bilingual scripts.</p>
+          <span class="guide-link">Open Form →</span>
+        </div>
+
+        <!-- NEW Card: opens unresolved issues list -->
+         
+
+        unsolved
+                 <div class="guide-card" role="button" tabindex="0" data-guide="Bidding Strategies" aria-label="Open form for Bidding Strategies">
+
+          <div class="badges">
+            <span class="badge optimization">Ops</span>
+            <span class="badge technical">Salesforce</span>
+          </div>
+          <h3 class="card-title">Unresolved Salesforce Issues</h3>
+          <p class="card-desc">View all issues that are still marked as not resolved, across all categories.</p>
+          <span class="guide-link">Open List →</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal A: Salesforce Issues Intake -->
+  <div id="issueModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="issueModalTitle">
+    <div class="modal-backdrop" data-close></div>
+
+    <div class="modal-panel" role="document">
+      <button class="modal-close" title="Close" aria-label="Close" data-close>&times;</button>
+      <h3 id="issueModalTitle">Salesforce Issues · Intake Form</h3>
+
+      <form id="issueForm" novalidate>
+        <!-- Selected Guide -->
+        <div class="form-row">
+          <label for="guideName" class="en">Selected Guide</label>
+          <input type="text" id="guideName" name="guideName" readonly />
+        </div>
+
+        <!-- Seller ID -->
+        <div class="form-row">
+          <label for="sellerId" class="en">Seller ID <span class="req">*</span> / <span class="ar">رقم البائع</span></label>
+          <input type="text" id="sellerId" name="sellerId" placeholder="e.g., S12345" required />
+          <div class="field-hint">Use your internal seller/rep ID.</div>
+        </div>
+
+        <!-- Issue Type + Subcategory -->
+        <div class="form-row grid-2">
+          <div>
+            <label for="issueType" class="en">Issue Type <span class="req">*</span> / <span class="ar">نوع المشكلة</span></label>
+            <select id="issueType" name="issueType" required>
+              <option value="" selected disabled>Select issue type</option>
+            </select>
+          </div>
+          <div>
+            <label for="subcategory" class="en">Subcategory / <span class="ar">الفئة الفرعية</span></label>
+            <select id="subcategory" name="subcategory">
+              <option value="" selected>Select subcategory</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-row">
+          <label for="description" class="en">Description <span class="req">*</span> / <span class="ar">الوصف</span></label>
+          <textarea id="description" name="description" rows="4" placeholder="Describe the issue, steps to reproduce, and any error messages…" required></textarea>
+        </div>
+
+        <!-- Flags -->
+        <div class="form-row grid-2">
+          <label class="checkbox">
+            <input type="checkbox" id="firstTime" name="firstTime" />
+            <span class="en">First time?</span> / <span class="ar">أول مرة؟</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" id="solved" name="solved" />
+            <span class="en">Resolved?</span> / <span class="ar">تم الحل؟</span>
+          </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <div id="issueStatus" class="status" aria-live="polite"></div>
+          <button type="submit" class="btn primary" id="issueSubmitBtn">Submit</button>
+          <button type="button" class="btn" data-close>Cancel</button>
+        </div>
+      </form>
+
+      <p class="footnote">Posts to Google Sheets (“SalesForce issues” → master “Intake” + per‑category sheets). Columns have checkbox & dropdown types in Sheets.</p>
+    </div>
+  </div>
+
+  <!-- Modal B: Unresolved Issues List -->
+  <div id="unsolvedModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="unsolvedModalTitle">
+    <div class="modal-backdrop" data-close></div>
+
+    <div class="modal-panel wide" role="document">
+      <button class="modal-close" title="Close" aria-label="Close" data-close>&times;</button>
+      <div class="modal-header">
+        <h3 id="unsolvedModalTitle">Unresolved Salesforce Issues</h3>
+        <div class="table-actions">
+          <button id="refreshUnsolved" class="btn"></button>
+        </div>
+      </div>
+
+      <div id="unsolvedStatus" class="status" aria-live="polite"></div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="unsolvedTable" aria-describedby="unsolvedModalTitle">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Seller ID</th>
+              <th>Issue Type</th>
+              <th>Subcategory</th>
+              <th>Description</th>
+              <th>First time?</th>
+              <th>Resolved?</th>
+              <th>Guide</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows injected by unsolvedList.js -->
+          </tbody>
+        </table>
+      </div>
+      <p class="footnote">Only entries with <strong>Resolved? = unchecked</strong> are shown here.</p>
+    </div>
+  </div>
+
+  <!-- External scripts only (no inline code) -->
+   <script src="scripts/theme.js"></script>
+   <script src="scripts/modal.js"></script>
+   <script src="scripts/addingIssue.js"></script>
+   <script src="scripts/unsolvedList.js"></script>
+</body>
+</html>
